@@ -22,10 +22,10 @@ store.subscribe(() => {
     console.log(visibleExpenses);
 })
 
-// now generate some transactions
-store.dispatch(addExpense({ description: 'Water Bill', amount: 4500, createdAt: -21000 }));
-store.dispatch(addExpense({ description: 'Gas Bill', amount: 300, createdAt: 2000 }));
-store.dispatch(addExpense({ description: 'Rent', amount: 109500, createdAt: 1000 }));
+// // now generate some transactions
+// store.dispatch(addExpense({ description: 'Water Bill', amount: 4500, createdAt: -21000 }));
+// store.dispatch(addExpense({ description: 'Gas Bill', amount: 300, createdAt: 2000 }));
+// store.dispatch(addExpense({ description: 'Rent', amount: 109500, createdAt: 1000 }));
 
 // now render to the screen
 const jsx = (
