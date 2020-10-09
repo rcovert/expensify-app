@@ -1,7 +1,7 @@
 import React from "react";
 import ExpenseForm from './ExpenseForm';
 import { connect } from 'react-redux';
-import { addExpense } from '../actions/expenses';
+import { startAddExpense } from '../actions/expenses';
 
 // note props are passed in from connected object 
 
@@ -11,7 +11,7 @@ export class AddExpensePage extends React.Component {
         // now route back to the dashboard with history.push method from router/route
         // props.dispatch(addExpense(expense));
         // use this.props for class based components - not required on stateless functional components
-        this.props.addExpense(expense);
+        this.props.startAddExpense(expense);
         this.props.history.push('/');
     };
     render() {
@@ -44,7 +44,7 @@ export class AddExpensePage extends React.Component {
 // mapDispatchToProps is used to simplify code and make it easier for testing
 const mapDispatchToProps = (dispatch) => ({
     // implicit return of object -- no need for return statement
-    addExpense: (expense) => dispatch(addExpense(expense))
+    startAddExpense: (expense) => dispatch(startAddExpense(expense))
 });
 // mapStateToProps is first arg; mapDispatchToProps is 2nd arg
 export default connect(undefined, mapDispatchToProps)(AddExpensePage);

@@ -5,12 +5,25 @@ const path = require('path');
 // note: change css extract and minimizer to latest components
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+// need webpack require for passing env variables down to app
+const webpack = require('webpack');
 
-// console.log(path.join(__dirname, 'public'));
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+if (process.env.NODE_ENV === 'test') {
+    console.log("env = ", process.env.NODE_ENV);
+    require('dotenv').config({ path: '.env.test' });
+} else if (process.env.NODE_ENV === 'development') {
+    console.log("env = ", process.env.NODE_ENV);
+    require('dotenv').config({ path: '.env.development' });
+}
+
+console.log(path.join(__dirname, 'public'));
+// console.log("env = ", process.env.NODE_ENV);
+// console.log("firebase api: ", process.env.FIREBASE_API_KEY);
 module.exports = (env) => {
     const isProduction = env === 'production';
 
-    console.log('env', env);
     return {
         entry: './src/app.js',
         output: {
@@ -49,7 +62,16 @@ module.exports = (env) => {
                 filename: 'styles.css',
                 chunkFilename: 'chunk.css',
                 ignoreOrder: false, // Enable to remove warnings about conflicting order
-            }),
+            }), new webpack.DefinePlugin({
+                'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),
+                'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+                'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
+                'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
+                'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+                'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
+                'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID),
+                'process.env.FIREBASE_MEASUREMENT_ID': JSON.stringify(process.env.FIREBASE_MEASUREMENT_ID)
+              }),
         ],
         optimization: {
             minimize: true,
