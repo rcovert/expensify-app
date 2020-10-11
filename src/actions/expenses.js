@@ -79,7 +79,7 @@ export const setExpenses = (expenses) => ({
     expenses
 });
 
-// atart set expenses - to get data from database
+// start set expenses - to get data from database
 export const startSetExpenses = () => {
     return (dispatch) => {
         // retrieve the data from the database - note this return 
@@ -99,6 +99,21 @@ export const startSetExpenses = () => {
                 });
                 // now set redux with the information
                 dispatch(setExpenses(expenses));
+            });
+    };
+};
+
+// start remove expense
+export const startRemoveExpense = ({ id }) => {
+    return (dispatch) => {
+        // remove the data from db then from the store
+        return database.ref(`expenses/${id}`)
+            .remove()
+            .then(() => {
+                // console.log(`item ${id} is removed`)
+                // now set redux with the information
+                // note remove takes an object id: id are the same so { id }
+                dispatch(removeExpense({id}));
             });
     };
 };

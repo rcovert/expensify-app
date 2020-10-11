@@ -1,7 +1,7 @@
 import React from 'react';
 import ExpenseForm from './ExpenseForm';
 import { connect } from 'react-redux';
-import { editExpense, removeExpense } from '../actions/expenses';
+import { editExpense, startRemoveExpense } from '../actions/expenses';
 
 // refactor to class based component
 // setup mapDispatchToProps
@@ -12,7 +12,7 @@ export class EditExpensePage extends React.Component {
         this.props.history.push('/');
     };
     onRemove = () => {
-        this.props.removeExpense({ id: this.props.expense.id });
+        this.props.startRemoveExpense({ id: this.props.expense.id });
         this.props.history.push('/');
     };
     render() {
@@ -72,7 +72,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     // implicit return of object -- no need for return statement
     // edit expense is set to a function
     editExpense: (id, expense) => dispatch(editExpense(id, expense)),
-    removeExpense: (expense) => dispatch(removeExpense(expense))
+    startRemoveExpense: (expense) => dispatch(startRemoveExpense(expense))
 });
 // need to pass in mapStateToProps to connect to get the props set
 export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage);

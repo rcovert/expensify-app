@@ -6,6 +6,7 @@ export default (state = expensesReducerDefaultState, action) => {
         case 'ADD_EXPENSE':
             return [...state, action.expense];
         case 'REMOVE_EXPENSE':  // use state.filter to get a new array back
+            console.log('remove called with' + action.id);
             return state.filter(({ id }) => id !== action.id);
         case 'EDIT_EXPENSE':  // use state.map to get a new array back
             // note individual items are expense
