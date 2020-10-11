@@ -72,3 +72,33 @@ export const editExpense = (id, updates) => ({
     id,
     updates
 });
+
+// SET_EXPENSES
+export const setExpenses = (expenses) => ({
+    type: 'SET_EXPENSES',
+    expenses
+});
+
+// atart set expenses - to get data from database
+export const startSetExpenses = () => {
+    return (dispatch) => {
+        // retrieve the data from the database - note this return 
+        // returns the promise that can then be used by caller - i.e. the then clause
+        // in app.js for this call
+        return database.ref('expenses')
+            .once('value')
+            .then((snapshot) => {
+                //console.log(snapshot.val())
+                const expenses = [];
+                // snapshot for each returns child snapshot/indv objects
+                snapshot.forEach((childSnapshot) => {
+                    expenses.push({
+                        id: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+                // now set redux with the information
+                dispatch(setExpenses(expenses));
+            });
+    };
+};
