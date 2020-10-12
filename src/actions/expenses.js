@@ -59,19 +59,43 @@ export const startAddExpense = (expenseData = {}) => {
     };
 };
 
-
 //REMOVE_EXPENSE
 // set action generator = function that implicitly returns a function
 export const removeExpense = ({ id } = {}) => ({
     type: 'REMOVE_EXPENSE',
     id
-})
+});
+// start remove expense
+export const startRemoveExpense = ({ id }) => {
+    return (dispatch) => {
+        // remove the data from db then from the store
+        return database.ref(`expenses/${id}`)
+            .remove()
+            .then(() => {
+                // console.log(`item ${id} is removed`)
+                // now set redux with the information
+                // note remove takes an object id: id are the same so { id }
+                dispatch(removeExpense({ id }));
+            });
+    };
+};
 //EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
     type: 'EDIT_EXPENSE',
     id,
     updates
 });
+// start edit expense
+export const startEditExpense = (id, updates) => {
+    return (dispatch) => {
+        // first synch firebase with update
+        return database.ref(`expenses/${id}`).update(updates).then(() => {
+            // then update redux
+            dispatch(editExpense(id, updates));
+        });
+    };
+};
+
 
 // SET_EXPENSES
 export const setExpenses = (expenses) => ({
@@ -103,17 +127,3 @@ export const startSetExpenses = () => {
     };
 };
 
-// start remove expense
-export const startRemoveExpense = ({ id }) => {
-    return (dispatch) => {
-        // remove the data from db then from the store
-        return database.ref(`expenses/${id}`)
-            .remove()
-            .then(() => {
-                // console.log(`item ${id} is removed`)
-                // now set redux with the information
-                // note remove takes an object id: id are the same so { id }
-                dispatch(removeExpense({id}));
-            });
-    };
-};

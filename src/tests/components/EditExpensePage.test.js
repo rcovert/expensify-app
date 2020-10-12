@@ -3,19 +3,19 @@ import { shallow } from 'enzyme';
 import { EditExpensePage } from '../../components/EditExpensePage';
 import expenses from '../fixtures/expenses';
 
-let editExpense, startRemoveExpense, history, wrapper;
+let startEditExpense, startRemoveExpense, history, wrapper;
 
 // before each sets common globals for each test case in the file
 beforeEach(() => {
-    editExpense = jest.fn();
+    startEditExpense = jest.fn();
     startRemoveExpense = jest.fn();
     history = { push: jest.fn() };
     wrapper = shallow(
       <EditExpensePage
-        editExpense={editExpense}
+        startEditExpense={startEditExpense}
         startRemoveExpense={startRemoveExpense}
         history={history}
-        expense={expenses[1]}
+        expense={expenses[2]}
       />
     );
   });
@@ -26,11 +26,11 @@ test('should render edit expense page correctly', () =>{
 });
 
 // should handle edit with spies
-test('should handle onSubmit for edit', () => {
+test('should handle start edit expense', () => {
     // find the function we want to test and pass fixture data
-    wrapper.find('ExpenseForm').prop('onSubmit')(expenses[1]);
+    wrapper.find('ExpenseForm').prop('onSubmit')(expenses[2]);
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(editExpense).toHaveBeenLastCalledWith(expenses[1].id, expenses[1]);
+    expect(startEditExpense).toHaveBeenLastCalledWith(expenses[2].id, expenses[2]);
 });
 
 // should handle remove expense
@@ -38,5 +38,5 @@ test('should handle removeExpense for edit', () => {
     // find the function we want to test and pass fixture data
     wrapper.find('button').simulate('click');
     expect(history.push).toHaveBeenLastCalledWith('/');
-    expect(startRemoveExpense).toHaveBeenLastCalledWith({id: expenses[1].id});
+    expect(startRemoveExpense).toHaveBeenLastCalledWith({id: expenses[2].id});
 });

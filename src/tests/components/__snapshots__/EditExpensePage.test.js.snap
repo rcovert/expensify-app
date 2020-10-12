@@ -7,15 +7,15 @@ exports[`should render edit expense page correctly 1`] = `
   </h1>
   <p>
     The id is: 
-    2
+    3
   </p>
   <ExpenseForm
     expense={
       Object {
-        "amount": 109500,
-        "createdAt": -345600000,
-        "description": "rent",
-        "id": "2",
+        "amount": 4500,
+        "createdAt": 345600000,
+        "description": "Credit Card",
+        "id": "3",
         "note": "",
       }
     }
