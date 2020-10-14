@@ -41,7 +41,9 @@ export const addExpense = (expense) => ({
 });
 
 export const startAddExpense = (expenseData = {}) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        // get the uid of user from the current state
+        const uid = getState().auth.uid;
         const {
             description = '',
             note = '',
@@ -50,7 +52,8 @@ export const startAddExpense = (expenseData = {}) => {
         } = expenseData;
         const expense = { description, note, amount, createdAt };
 
-        return database.ref('expenses').push(expense).then((ref) => {
+        return database.ref(`users/${uid}/expenses`)
+        .push(expense).then((ref) => {
             dispatch(addExpense({
                 id: ref.key,
                 ...expense
@@ -67,9 +70,10 @@ export const removeExpense = ({ id } = {}) => ({
 });
 // start remove expense
 export const startRemoveExpense = ({ id }) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         // remove the data from db then from the store
-        return database.ref(`expenses/${id}`)
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses/${id}`)
             .remove()
             .then(() => {
                 // console.log(`item ${id} is removed`)
@@ -87,15 +91,15 @@ export const editExpense = (id, updates) => ({
 });
 // start edit expense
 export const startEditExpense = (id, updates) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         // first synch firebase with update
-        return database.ref(`expenses/${id}`).update(updates).then(() => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses/${id}`).update(updates).then(() => {
             // then update redux
             dispatch(editExpense(id, updates));
         });
     };
 };
-
 
 // SET_EXPENSES
 export const setExpenses = (expenses) => ({
@@ -105,11 +109,12 @@ export const setExpenses = (expenses) => ({
 
 // start set expenses - to get data from database
 export const startSetExpenses = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         // retrieve the data from the database - note this return 
         // returns the promise that can then be used by caller - i.e. the then clause
         // in app.js for this call
-        return database.ref('expenses')
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses`)
             .once('value')
             .then((snapshot) => {
                 //console.log(snapshot.val())
