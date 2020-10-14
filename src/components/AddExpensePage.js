@@ -12,7 +12,7 @@ export class AddExpensePage extends React.Component {
         // props.dispatch(addExpense(expense));
         // use this.props for class based components - not required on stateless functional components
         this.props.startAddExpense(expense);
-        this.props.history.push('/');
+        this.props.history.push('/dashboard');
     };
     render() {
         // note - this form of the code avoids writing function in-line

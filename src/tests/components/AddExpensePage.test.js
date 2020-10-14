@@ -21,6 +21,6 @@ test('should render add expense page correctly', () =>{
 test('should handle onSubmit', () => {
     // find the function we want to test and pass fixture data
     wrapper.find('ExpenseForm').prop('onSubmit')(expenses[1]);
-    expect(history.push).toHaveBeenLastCalledWith('/');
+    expect(history.push).toHaveBeenLastCalledWith('/dashboard');
     expect(startAddExpense).toHaveBeenLastCalledWith(expenses[1]);
 });

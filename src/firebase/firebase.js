@@ -6,7 +6,7 @@ import 'firebase/analytics';
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-    databaseURL:process.env.FIREBASE_DATABASE_URL,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
     projectId: process.env.FIREBASE_PROJECT_ID,
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
@@ -14,16 +14,19 @@ const firebaseConfig = {
     measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 // Initialize Firebase
-// console.log(firebaseConfig.apiKey);
-// console.log("API KEY", process.env.FIREBASE_API_KEY)
-// console.log("NODE_ENV",process.env.NODE_ENV) 
 
 firebase.initializeApp(firebaseConfig);
 // firebase.analytics();
 // set database variable
 const database = firebase.database();
+// set auth provider to google
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+// set custom parms to force account selection
+googleAuthProvider.setCustomParameters({
+    prompt: 'select_account'
+});
 
-export { firebase, database as default };
+export { firebase, googleAuthProvider, database as default };
 
 // // database.ref('expenses')
 // //     .once('value')
