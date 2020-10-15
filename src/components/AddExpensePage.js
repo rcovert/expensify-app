@@ -30,25 +30,13 @@ export class AddExpensePage extends React.Component {
                     />
                 </div>
             </div>
-        )
+        );
     };
 };
 
-// stateless functional version
-// const AddExpensePage = (props) => (
-//     <div>
-//         <h1>Add Expense</h1>
-//         <ExpenseForm
-//             onSubmit={(expense) => {
-//                 props.onSubmit(expense);
-//                 props.history.push('/');
-//             }}
-//         />
-//     </div>
-// );
-
 // mapDispatchToProps is used to simplify code and make it easier for testing
-const mapDispatchToProps = ({
+// note:  this is an arrow function and takes dispatch as an input arg
+const mapDispatchToProps = (dispatch) => ({
     // implicit return of object -- no need for return statement
     startAddExpense: (expense) => dispatch(startAddExpense(expense))
 });

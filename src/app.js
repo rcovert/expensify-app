@@ -6,6 +6,7 @@ import AppRouter, { history } from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import { startSetExpenses } from './actions/expenses';
 import { login, logout } from './actions/auth';
+import LoadingPage from './components/LoadingPage';
 import getVisibleExpenses from './selectors/expenses';
 import 'normalize.css/normalize.css'
 import './styles/styles.scss';
@@ -22,7 +23,6 @@ store.subscribe(() => {
     //console.log(visibleExpenses);
 })
 
-
 // now render to the screen
 const jsx = (
     // note use of provider component
@@ -31,9 +31,6 @@ const jsx = (
     </Provider>
 );
 
-
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'));
-
 let hasRendered = false;
 const renderApp = () => {
     if (!hasRendered) {
@@ -41,6 +38,8 @@ const renderApp = () => {
         hasRendered = true;
     }
 };
+
+ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {
     console.log('state changed');
