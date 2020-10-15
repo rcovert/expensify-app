@@ -5,7 +5,6 @@ const path = require('path');
 // note: change css extract and minimizer to latest components
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-// also note had to use url-loader and file-loader for jpg resources
 // need webpack require for passing env variables down to app
 const webpack = require('webpack');
 
@@ -53,19 +52,9 @@ module.exports = (env) => {
                             sourceMap: true
                         }
                     }]
-            }, {
-                test: /\.(jpe?g|gif|png|svg)$/i,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10000
-                        }
-                    }]
-            }
-            ]
-        },
+            }]
 
+        },
         plugins: [
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
@@ -82,7 +71,7 @@ module.exports = (env) => {
                 'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
                 'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID),
                 'process.env.FIREBASE_MEASUREMENT_ID': JSON.stringify(process.env.FIREBASE_MEASUREMENT_ID)
-            }),
+              }),
         ],
         optimization: {
             minimize: true,
