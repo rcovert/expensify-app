@@ -13,8 +13,8 @@ export const startLogin = () => {
                 var token = result.credential.accessToken;
                 var user = result.user;
 
-                console.log(token)
-                console.log(user)
+                //console.log(token)
+                //console.log(user)
             });
     };
 };
