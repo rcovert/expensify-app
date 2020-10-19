@@ -42,9 +42,9 @@ const renderApp = () => {
 ReactDOM.render(<LoadingPage />, document.getElementById('app'));
 
 firebase.auth().onAuthStateChanged((user) => {
-    console.log('state changed');
+    //console.log('state changed');
     if (user) {
-        console.log('user id: ', user.uid);
+        // console.log('user id: ', user.uid);
         // now update store with uid of user - used to protect other pages
         store.dispatch(login(user.uid)); // this will create the action object
         // that gets processed by the auth reducer
